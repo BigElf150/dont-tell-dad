@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Don't Tell Dad — Al Khobar</title>
+<meta name="description" content="Where good food meets better secrets. Specialty coffee, comfort eats and chill vibes on King Fahd St, Al Khobar.">
+<meta name="theme-color" content="#082018">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<style>
+:root{
+  --ink:#082018;        /* the brand card, read off its flat field           */
+  --green:#003828;      /* the checkerboard + the plate rim — the exact green */
+  --velvet:#284840;     /* lit curtain                                        */
+  --cream:#E8E8F0;      /* the checkerboard white                             */
+  --amber:#A65212;      /* the caramel                                        */
+  --paper:#F3F1EA;
+  --gut:clamp(1.15rem,4.4vw,3.4rem);
+  --disp:"Anton","Haettenschweiler","Arial Narrow",Impact,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ar:"IBM Plex Sans Arabic","Noto Kufi Arabic","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;
+  /* clip, not hidden: overflow-x:hidden makes this a scroll container, which silently
+     disables position:sticky on the pinned film layer. clip has no such side effect. */
+  overflow-x:clip}
+body{background:var(--ink);color:var(--cream);font-family:var(--body);
+  -webkit-font-smoothing:antialiased;line-height:1.55;
+  /* the film wrapper is absolutely positioned and must size to the DOCUMENT, not the
+     viewport — without a positioned ancestor its containing block is the initial one and
+     the sticky layer stops pinning after a single screen */
+  position:relative}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ---- the film layer -------------------------------------------------------
+   NOT position:fixed. On iOS a fixed layer is hoisted out of the scrolling
+   compositor and does not repaint during momentum scroll — it holds its last
+   painted frame, which reads as a frozen film. Sticky inside an absolutely
+   positioned full-height wrapper is how Apple's own scroll pages pin. */
+.stage{position:absolute;inset:0;z-index:0}
+.film{position:sticky;top:0;height:100lvh;height:100vh;overflow:hidden;background:var(--ink)}
+.film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.veil{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(8,32,24,.72) 0%,rgba(8,32,24,.16) 26%,rgba(8,32,24,.16) 62%,rgba(8,32,24,.88) 100%)}
+/* A checker overlay was tried here and cut: at any opacity that registered it read as a
+   broken-image placeholder over the film. The check belongs to the food, not to the glass. */
+
+/* ---- checker: the brand's own device, rebuilt in CSS ---------------------- */
+.checker{height:18px;
+  background:repeating-conic-gradient(var(--green) 0% 25%,var(--cream) 0% 50%) 0 0/18px 18px}
+.checker.thin{height:12px;background-size:12px 12px}
+
+/* ---- chrome --------------------------------------------------------------- */
+.prog{position:fixed;inset-block-start:0;inset-inline:0;height:4px;z-index:6;background:rgba(232,232,240,.10)}
+.prog i{display:block;height:100%;width:var(--p,0%);
+  background:repeating-conic-gradient(var(--cream) 0% 25%,var(--amber) 0% 50%) 0 0/8px 8px}
+.bar{position:fixed;inset-block-start:4px;inset-inline:0;z-index:5;
+  display:flex;align-items:center;gap:.9rem;padding:.55rem var(--gut);
+  background:linear-gradient(180deg,rgba(8,32,24,.92),rgba(8,32,24,0))}
+.bar .mk{height:34px;width:auto;flex:none}
+.bar .wm{font-family:var(--disp);font-size:clamp(.95rem,2.4vw,1.15rem);letter-spacing:.06em;
+  text-transform:uppercase;white-space:nowrap}
+.bar .sp{flex:1}
+.bar button,.bar a.btn{font:inherit;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;
+  background:transparent;color:var(--cream);border:1px solid rgba(232,232,240,.42);
+  padding:.42rem .8rem;border-radius:99px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.bar a.btn{background:var(--cream);color:var(--ink);border-color:var(--cream);font-weight:700}
+
+/* z-index 1 puts the live caption above the film (0) but BEHIND the content panels (2), so it
+   reads only while the film is the thing on screen instead of colliding with copy. */
+.now{position:fixed;inset-block-end:calc(var(--gut)*.6);inset-inline-start:var(--gut);z-index:1;
+  pointer-events:none;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(232,232,240,.62);text-shadow:0 1px 12px rgba(0,0,0,.7)}
+.now b{display:block;font-weight:400;font-size:.95rem;letter-spacing:.04em;text-transform:none;
+  color:var(--cream)}
+.now .alt{font-family:var(--ar);opacity:.6}
+
+/* ---- content flow --------------------------------------------------------- */
+.flow{position:relative;z-index:2}
+.gap{height:150svh;height:150vh}
+.gap.s{height:88svh;height:88vh}
+section{padding-inline:var(--gut)}
+.wrap{max-width:1080px;margin-inline:auto}
+.panel{background:rgba(8,32,24,.90);backdrop-filter:blur(14px) saturate(1.1);
+  border:1px solid rgba(232,232,240,.13);border-radius:2px;
+  padding:clamp(1.4rem,4.6vw,3.2rem);max-width:1080px;margin-inline:auto;overflow:hidden}
+.panel.paper{background:var(--paper);color:var(--ink);border-color:rgba(8,32,24,.16)}
+.panel.paper .kicker{color:rgba(8,32,24,.55)}
+.panel.paper .rule{background:rgba(8,32,24,.16)}
+
+.kicker{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,232,240,.55);
+  margin:0 0 1.1rem}
+h1,h2,h3{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;
+  line-height:.94;margin:0}
+h1{font-size:clamp(3.1rem,13vw,9.5rem)}
+h2{font-size:clamp(2rem,6.6vw,4.4rem);margin-bottom:1.1rem}
+h3{font-size:clamp(1.1rem,2.7vw,1.5rem);letter-spacing:.03em;margin-bottom:.5rem}
+p{margin:0 0 1rem;max-width:62ch}
+.lead{font-size:clamp(1.02rem,2.3vw,1.3rem);color:rgba(232,232,240,.9)}
+.panel.paper .lead{color:rgba(8,32,24,.82)}
+.rule{height:1px;background:rgba(232,232,240,.16);margin:2rem 0;border:0}
+
+/* ---- hero ----------------------------------------------------------------- */
+.hero{min-height:100svh;min-height:100vh;display:flex;flex-direction:column;
+  justify-content:flex-end;padding-block:calc(var(--gut)*2.4)}
+.hero .mark{width:clamp(90px,17vw,168px);margin-bottom:1.2rem;opacity:.96}
+.hero h1{margin-bottom:.5rem}
+.hero .sub{font-size:clamp(1rem,2.7vw,1.5rem);color:var(--cream);max-width:22ch;margin:0 0 .3rem}
+.hero .sub .ar{font-family:var(--ar);display:block;opacity:.66;font-size:.86em;margin-top:.25rem}
+.hero .meta{margin-top:1.6rem;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(232,232,240,.6)}
+.scrollhint{margin-top:1.4rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(232,232,240,.45);display:flex;align-items:center;gap:.6rem}
+.scrollhint i{display:block;width:34px;height:1px;background:rgba(232,232,240,.45)}
+
+/* ---- lists ---------------------------------------------------------------- */
+.cols{display:grid;gap:clamp(1.2rem,3.4vw,2.6rem);grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.dish{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:.7rem;
+  padding:.55rem 0;border-bottom:1px solid rgba(232,232,240,.12)}
+.panel.paper .dish{border-color:rgba(8,32,24,.13)}
+.dish .n{font-size:1.02rem}
+.dish .n .ar{font-family:var(--ar);opacity:.55;font-size:.9em;margin-inline-start:.5rem;
+  white-space:nowrap}
+.dish .d{border-bottom:1px dotted rgba(232,232,240,.22);transform:translateY(-.25rem);min-width:1.2rem}
+.panel.paper .dish .d{border-color:rgba(8,32,24,.2)}
+.dish .c{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(232,232,240,.45);white-space:nowrap}
+.panel.paper .dish .c{color:rgba(8,32,24,.45)}
+.note{font-size:.84rem;color:rgba(232,232,240,.6);border-inline-start:2px solid var(--amber);
+  padding-inline-start:.9rem;margin-top:1.6rem;max-width:56ch}
+.panel.paper .note{color:rgba(8,32,24,.66)}
+
+/* ---- gallery -------------------------------------------------------------- */
+.gal{display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr))}
+.gal figure{margin:0;position:relative;overflow:hidden;background:var(--green);aspect-ratio:4/5}
+.gal img{width:100%;height:100%;object-fit:cover}
+.gal figcaption{position:absolute;inset-inline:0;inset-block-end:0;padding:.7rem .8rem;
+  font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  background:linear-gradient(0deg,rgba(8,32,24,.9),transparent)}
+.gal figcaption .ar{font-family:var(--ar);display:block;text-transform:none;letter-spacing:0;
+  opacity:.66;font-size:1.05em}
+
+/* ---- quotes --------------------------------------------------------------- */
+.quotes{display:grid;gap:1.4rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+blockquote{margin:0;font-size:clamp(1.02rem,2.2vw,1.22rem);line-height:1.45}
+blockquote cite{display:block;margin-top:.8rem;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;font-style:normal;color:rgba(232,232,240,.5)}
+.panel.paper blockquote cite{color:rgba(8,32,24,.5)}
+.stars{color:var(--amber);letter-spacing:.2em;font-size:.9rem}
+
+/* ---- visit ---------------------------------------------------------------- */
+.visit{display:grid;gap:clamp(1.4rem,4vw,3rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
+.hrs{width:100%;border-collapse:collapse;font-size:.95rem}
+.hrs td{padding:.42rem 0;border-bottom:1px solid rgba(232,232,240,.12)}
+.panel.paper .hrs td{border-color:rgba(8,32,24,.13)}
+.hrs td:last-child{text-align:end;font-variant-numeric:tabular-nums;white-space:nowrap}
+.map{width:100%;aspect-ratio:4/3;border:0;filter:grayscale(.35) contrast(1.05);background:var(--green)}
+.policy{background:var(--amber);color:#fff;padding:1rem 1.2rem;border-radius:2px;margin-top:1.4rem;
+  font-size:.95rem}
+.policy .ar{font-family:var(--ar);display:block;opacity:.9;margin-top:.3rem}
+
+/* ---- cta ------------------------------------------------------------------ */
+.cta{text-align:center}
+.cta h2{margin-bottom:1.6rem}
+.acts{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-bottom:1rem}
+.act{display:inline-flex;align-items:center;gap:.55rem;padding:.95rem 1.7rem;border-radius:99px;
+  font-weight:700;font-size:.95rem;text-decoration:none;border:1px solid transparent}
+.act.pri{background:var(--cream);color:var(--ink)}
+.act.sec{border-color:rgba(232,232,240,.4);color:var(--cream)}
+.act.dis{border-color:rgba(232,232,240,.2);color:rgba(232,232,240,.42);cursor:not-allowed}
+.panel.paper .act.sec{border-color:rgba(8,32,24,.3);color:var(--ink)}
+
+footer{position:relative;z-index:2;background:var(--ink);padding:var(--gut) var(--gut) calc(var(--gut)*1.6);
+  border-top:1px solid rgba(232,232,240,.12);font-size:.82rem;color:rgba(232,232,240,.55)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:flex-start}
+.disc{max-width:56ch;font-size:.76rem;line-height:1.6;color:rgba(232,232,240,.42)}
+
+/* ---- reveal: gated on .js so a script failure can never leave a blank page -- */
+.js .rv{opacity:0;transform:translateY(18px);
+  transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ---- rtl ------------------------------------------------------------------ */
+html[dir="rtl"] body{font-family:var(--ar)}
+html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3{font-family:var(--ar);font-weight:700;
+  letter-spacing:0;line-height:1.18;text-transform:none}
+html[dir="rtl"] h1{font-size:clamp(2.4rem,10vw,7rem)}
+html[dir="rtl"] .kicker,html[dir="rtl"] .now,html[dir="rtl"] .gal figcaption,
+html[dir="rtl"] .dish .c{letter-spacing:0;text-transform:none}
+html[dir="rtl"] .hero .sub .ar,html[dir="rtl"] .dish .n .ar,
+html[dir="rtl"] .gal figcaption .ar,html[dir="rtl"] .now .alt{font-family:var(--body)}
+
+@media (prefers-reduced-motion:reduce){
+  .js .rv{opacity:1;transform:none;transition:none}
+  .gap{height:60svh;height:60vh}
+}
+@media (max-width:640px){
+  .gap{height:96svh;height:96vh}
+  .gap.s{height:56svh;height:56vh}
+  .bar .wm{display:none}
+  .now{font-size:.68rem}
+  /* the leader dots have nowhere to go at this width, so the row stacks instead:
+     name and category on one line, the Arabic on its own beneath */
+  .dish{grid-template-columns:1fr auto;gap:.5rem 1rem}
+  .dish .d{display:none}
+  .dish .n .ar{display:block;margin-inline-start:0;margin-block-start:.15rem;white-space:normal}
+  .dish .c{align-self:start}
+}
+</style>
+</head>
+<body>
+
+<div class="prog" aria-hidden="true"><i id="prog"></i></div>
+
+<header class="bar">
+  <img class="mk" src="img/mark.png" alt="" aria-hidden="true">
+  <span class="wm" data-k="wm">Don't Tell Dad</span>
+  <span class="sp"></span>
+  <button id="lang" type="button" aria-label="العربية">العربية</button>
+  <a class="btn" href="tel:+966544347999" data-k="call">Call</a>
+</header>
+
+<div class="stage" aria-hidden="true">
+  <div class="film">
+    <video id="film" playsinline muted preload="auto" disablepictureinpicture
+           poster="img/poster.jpg" tabindex="-1">
+      <source id="src" src="film.mp4" type="video/mp4">
+    </video>
+    <div class="veil"></div>
+  </div>
+</div>
+
+<div class="now" aria-hidden="true"><b id="nowv">Salted caramel</b><span class="alt" id="nowa">كراميل مملّح</span></div>
+
+<main class="flow">
+
+  <section class="hero wrap">
+    <img class="mark" src="img/mark.png" alt="Don't Tell Dad">
+    <h1 data-k="h1">Don't<br>Tell Dad</h1>
+    <p class="sub"><span data-k="sub">Where good food meets better secrets.</span>
+      <span class="ar" data-k="subAr">أكل طيب… وأسرار أطيب</span></p>
+    <p class="meta" data-k="meta">Al Khobar · Open from 7am</p>
+    <div class="scrollhint"><i></i><span data-k="hint">Scroll</span></div>
+  </section>
+
+  <div class="gap"></div>
+
+  <section>
+    <div class="panel rv">
+      <p class="kicker" data-k="k1">The secret</p>
+      <h2 data-k="h2">Nobody<br>needs to know</h2>
+      <p class="lead" data-k="p1">A restaurant and a specialty coffee house on King Fahd Street, open from
+        seven in the morning. Cinnamon rolls, layer cakes cut to order, shakshuka in the pan it was
+        cooked in — served on our own plates, on a green check we are quite attached to.</p>
+      <p data-k="p2">It is usually full. That is the honest version. Come early, or book a table.</p>
+    </div>
+  </section>
+
+  <div class="gap"></div>
+
+  <section>
+    <div class="panel paper rv">
+      <p class="kicker" data-k="k2">What people order</p>
+      <h2 data-k="h3">The regulars</h2>
+      <div class="cols">
+        <div>
+          <div class="dish"><span class="n"><span data-k="d1">Cinnamon roll</span><span class="ar" data-k="d1a">سينامون رول</span></span><span class="d"></span><span class="c" data-k="c1">most ordered</span></div>
+          <div class="dish"><span class="n"><span data-k="d2">Matilda cake</span><span class="ar" data-k="d2a">كيك ماتيلدا</span></span><span class="d"></span><span class="c" data-k="c2">the chocolate one</span></div>
+          <div class="dish"><span class="n"><span data-k="d3">Shakshuka</span><span class="ar" data-k="d3a">شكشوكة</span></span><span class="d"></span><span class="c" data-k="c3">all day</span></div>
+          <div class="dish"><span class="n"><span data-k="d4">Egg sandwich</span><span class="ar" data-k="d4a">ساندويتش البيض</span></span><span class="d"></span><span class="c" data-k="c4">breakfast</span></div>
+        </div>
+        <div>
+          <div class="dish"><span class="n"><span data-k="d5">Soufflé pancakes</span><span class="ar" data-k="d5a">بان كيك سوفليه</span></span><span class="d"></span><span class="c" data-k="c5">sweet</span></div>
+          <div class="dish"><span class="n"><span data-k="d6">Truffle mushroom</span><span class="ar" data-k="d6a">مشروم ترافل</span></span><span class="d"></span><span class="c" data-k="c6">with spinach</span></div>
+          <div class="dish"><span class="n"><span data-k="d7">Flat white</span><span class="ar" data-k="d7a">فلات وايت</span></span><span class="d"></span><span class="c" data-k="c7">specialty</span></div>
+          <div class="dish"><span class="n"><span data-k="d8">Pizza</span><span class="ar" data-k="d8a">بيتزا</span></span><span class="d"></span><span class="c" data-k="c8">from the oven</span></div>
+        </div>
+      </div>
+      <p class="note" data-k="note1">This is what people order most, not a menu. The full menu and its
+        prices live in the restaurant and on our Instagram — we would rather show you nothing than
+        show you a price that has changed.</p>
+    </div>
+  </section>
+
+  <div class="gap s"></div>
+
+  <section>
+    <div class="panel rv" style="padding-inline:0;padding-block:0;background:none;border:0">
+      <div class="gal">
+        <figure><img src="img/g_31.jpg" alt="Club sandwich with crisps on a branded plate" decoding="async"><figcaption><span data-k="g1">Club sandwich</span><span class="ar" data-k="g1a">كلوب ساندويتش</span></figcaption></figure>
+        <figure><img src="img/g_47.jpg" alt="Brioche sliders on a green-rimmed platter" decoding="async"><figcaption><span data-k="g2">Brioche sliders</span><span class="ar" data-k="g2a">سلايدرز بريوش</span></figcaption></figure>
+        <figure><img src="img/g_45.jpg" alt="Herb-topped pizza on the green check" decoding="async"><figcaption><span data-k="g3">Green pizza</span><span class="ar" data-k="g3a">بيتزا خضراء</span></figcaption></figure>
+        <figure><img src="img/g_05.jpg" alt="A spread of breakfast plates" decoding="async"><figcaption><span data-k="g4">The spread</span><span class="ar" data-k="g4a">سفرة الفطور</span></figcaption></figure>
+        <figure><img src="img/g_21.jpg" alt="Stacked french toast dusted with sugar" decoding="async"><figcaption><span data-k="g5">French toast</span><span class="ar" data-k="g5a">فرنش توست</span></figcaption></figure>
+        <figure><img src="img/g_46.jpg" alt="Chocolate cake with piped cream" decoding="async"><figcaption><span data-k="g6">Chocolate cake</span><span class="ar" data-k="g6a">كيك شوكولاتة</span></figcaption></figure>
+        <figure><img src="img/g_20.jpg" alt="Stacked chocolate slice with a sauce jug" decoding="async"><figcaption><span data-k="g7">Chocolate stack</span><span class="ar" data-k="g7a">طبقات شوكولاتة</span></figcaption></figure>
+        <figure><img src="img/g_11.jpg" alt="Cream poured over a dessert" decoding="async"><figcaption><span data-k="g8">Cream, poured</span><span class="ar" data-k="g8a">قشطة تُسكب</span></figcaption></figure>
+        <figure><img src="img/g_34.jpg" alt="A slice of cake carried from the pass" decoding="async"><figcaption><span data-k="g9">From the pass</span><span class="ar" data-k="g9a">من المطبخ</span></figcaption></figure>
+        <figure><img src="img/g_28.jpg" alt="Salmon and avocado toast on a green-rimmed plate" decoding="async"><figcaption><span data-k="g10">Toast, loaded</span><span class="ar" data-k="g10a">توست محمّل</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="gap"></div>
+
+  <section>
+    <div class="panel rv">
+      <p class="kicker" data-k="k3">4.1 out of 5 · 2,338 reviews on Google</p>
+      <h2 data-k="h4">Their words,<br>not ours</h2>
+      <div class="quotes">
+        <blockquote>
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <p data-k="q1">“Highly recommended! The egg sandwich was absolutely delicious.”</p>
+          <cite data-k="q1c">Rashid · Local Guide · Google</cite>
+        </blockquote>
+        <blockquote>
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <p data-k="q2">“One of the best restaurants we've visited. The food was amazing, and the
+            service was outstanding.”</p>
+          <cite data-k="q2c">Nouf Ali · Google</cite>
+        </blockquote>
+      </div>
+      <p class="note" data-k="note2">Quoted from public Google reviews, trimmed but not reworded.</p>
+    </div>
+  </section>
+
+  <div class="gap"></div>
+
+  <section>
+    <div class="panel paper rv">
+      <p class="kicker" data-k="k4">Visit</p>
+      <h2 data-k="h5">King Fahd St,<br>Al Khobar</h2>
+      <div class="visit">
+        <div>
+          <table class="hrs">
+            <tr><td data-k="dSat">Saturday</td><td>07:00 — 23:30</td></tr>
+            <tr><td data-k="dSun">Sunday</td><td>07:00 — 23:30</td></tr>
+            <tr><td data-k="dMon">Monday</td><td>07:00 — 23:30</td></tr>
+            <tr><td data-k="dTue">Tuesday</td><td>07:00 — 23:30</td></tr>
+            <tr><td data-k="dWed">Wednesday</td><td>07:00 — 23:30</td></tr>
+            <tr><td data-k="dThu">Thursday</td><td>07:00 — 00:00</td></tr>
+            <tr><td data-k="dFri">Friday</td><td>07:00 — 00:00</td></tr>
+          </table>
+          <p style="margin-top:1.2rem" data-k="addr">Al Khobar Al Shamalia, Al Khobar 34425<br>
+            Dine-in · Takeaway · Delivery</p>
+          <div class="policy">
+            <strong data-k="pol">No children under 8.</strong>
+            <span class="ar" data-k="polAr">لا يُسمح بدخول الأطفال دون 8 سنوات</span>
+          </div>
+        </div>
+        <div>
+          <iframe class="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Map to Don't Tell Dad, Al Khobar"
+            src="https://www.google.com/maps?q=26.2986324,50.2152887&z=16&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gap s"></div>
+
+  <section>
+    <div class="panel cta rv">
+      <img src="img/mark.png" alt="" aria-hidden="true" style="width:96px;margin:0 auto 1.2rem;opacity:.9">
+      <h2 data-k="h6">Come in.<br>We won't tell.</h2>
+      <div class="acts">
+        <a class="act pri" href="tel:+966544347999" data-k="a1">Call 054 434 7999</a>
+        <a class="act sec" href="https://www.instagram.com/donttelldad.sa" rel="noopener" data-k="a2">Instagram</a>
+        <a class="act sec" href="https://www.google.com/maps/search/?api=1&amp;query=26.2986324%2C50.2152887" rel="noopener" data-k="a3">Directions</a>
+        <span class="act dis" title="Booking link not supplied yet" data-k="a4">Book a table — coming</span>
+      </div>
+      <p class="note" style="margin-inline:auto;text-align:start" data-k="note3">The booking link and a
+        confirmed WhatsApp number are still to come from the restaurant, so neither button is wired
+        to a guess.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="checker" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="wm" style="font-family:var(--disp);font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cream)">Don't Tell Dad</div>
+      <div style="margin-top:.3rem">King Fahd St, Al Khobar · <a href="tel:+966544347999">054 434 7999</a></div>
+    </div>
+    <p class="disc" data-k="disc">Concept site, not an official page. Photography belongs to
+      Don't Tell Dad. Hours, dishes and reviews were read from the restaurant's public Google
+      listing and Instagram on 14 August 2026 and are not confirmed by the business. No prices are
+      shown because none have been confirmed.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var film=document.getElementById('film'), prog=document.getElementById('prog'),
+      nowv=document.getElementById('nowv'), nowa=document.getElementById('nowa'),
+      reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* The caption list is coupled to the film's cut order: re-cutting the film without
+     re-cutting the list silently mislabels every segment after the change. So it is READ
+     from film.json, which build_film.py derives from the same SEQ it renders. The literal
+     below is only a fallback for when the fetch fails (file://, offline). */
+  var STEP=1.8;
+  var SEG=[["Salted caramel","كراميل مملّح"],["Pistachio and cream","فستق وقشطة"],
+           ["The cinnamon roll","سينامون رول"],["Poured at the table","يُسكب أمامك"],
+           ["Shakshuka","شكشوكة"],["From the oven","من الفرن"],
+           ["On our own plates","على صحوننا"],["Soufflé pancakes","بان كيك سوفليه"],
+           ["Warm, always","دايمًا دافي"],["Cakes, whole or by the slice","كيك كامل أو قطعة"],
+           ["Made here, every day","يُصنع هنا كل يوم"],["Don't tell dad","لا تقولون لبابا"]];
+  if(window.fetch) fetch('film.json').then(function(r){ return r.ok?r.json():null; }).then(function(j){
+    if(!j||!j.segments||!j.segments.length) return;
+    SEG=j.segments.map(function(s){ return [s.en,s.ar]; });
+    if(j.cadence) STEP=j.cadence;
+    lastSeg=-1;
+  }).catch(function(){});
+
+  /* Narrow screens get the smaller encode, chosen before the element starts loading. Device
+     pixel ratio is deliberately NOT considered: the film is laid out in CSS pixels and a 375pt
+     phone never shows more than 854 of them, so the small file is right on retina too. */
+  if(innerWidth<760){
+    var s=document.getElementById('src'); s.src='film-m.mp4'; film.load();
+  }
+
+  var target=0,cur=0,rafTicks=0,lastSeg=-1,lastRaf=0,docH=0,frames=0,ar=false;
+
+  /* iOS will not paint a seek on a video that has never played. Muted+playsinline autoplay is
+     permitted, but if policy blocks it we prime again on the first touch, and keep retrying
+     until seekable populates. */
+  function prime(){ try{ var p=film.play(); if(p&&p.then) p.then(function(){film.pause();}).catch(function(){}); }catch(e){} }
+  if(film.readyState>=3) prime(); else film.addEventListener('canplay',prime,{once:true});
+  addEventListener('touchstart',function once(){ prime(); removeEventListener('touchstart',once); },{passive:true});
+  var tries=0, timer=setInterval(function(){
+    if(seekReady()||++tries>40){ clearInterval(timer); return; }
+    prime();
+  },500);
+
+  function refreshH(){ docH=document.documentElement.scrollHeight-innerHeight; }
+  refreshH();
+  function measure(){
+    target=docH>0?Math.min(1,Math.max(0,scrollY/docH)):0;
+    prog.style.width=(target*100).toFixed(2)+'%';
+  }
+
+  /* iOS ignores preload, so duration can be NaN and seekable an EMPTY TimeRanges list long
+     after loadedmetadata. Writes before seekable populates are dropped silently — the film
+     sits on frame one while the page scrolls normally. Gate on seekable itself. */
+  function seekReady(){
+    return film.readyState>=1 && isFinite(film.duration) && film.duration>0 &&
+           film.seekable && film.seekable.length>0;
+  }
+  function apply(p){
+    if(!seekReady()) return;
+    var t=p*(film.duration-0.05);
+    /* Quantized to 0.01s. Writing a fresh float every frame cancels the in-flight WebKit seek
+       before it completes, so no seek ever finishes and no new frame is presented. */
+    t=Math.floor(t*100)/100;
+    if(Math.abs(film.currentTime-t)>=0.01){ try{ film.currentTime=t; }catch(e){} }
+    var i=Math.min(SEG.length-1,Math.max(0,Math.round((t-1.2)/STEP)));
+    if(i!==lastSeg){ lastSeg=i;
+      nowv.textContent=ar?SEG[i][1]:SEG[i][0];
+      nowa.textContent=ar?SEG[i][0]:SEG[i][1]; }
+  }
+  function tick(ts){
+    rafTicks++; lastRaf=ts||(performance&&performance.now?performance.now():0);
+    if((frames++ % 30)===0) refreshH();
+    measure();
+    cur+=(target-cur)*0.16;            /* raw scroll scrubs too nervously */
+    if(Math.abs(target-cur)<0.0004) cur=target;
+    apply(cur);
+    requestAnimationFrame(tick);
+  }
+  function onScroll(){
+    refreshH(); measure();
+    var now=(performance&&performance.now?performance.now():0);
+    if(rafTicks===0||now-lastRaf>250){ cur=target; apply(cur); }
+  }
+  if(!reduce){
+    addEventListener('scroll',onScroll,{passive:true});
+    addEventListener('resize',onScroll);
+    onScroll(); requestAnimationFrame(tick);
+    /* rAF stalls in backgrounded tabs and non-compositing embeds; without this the film
+       freezes mid-page while target keeps moving. */
+    setInterval(function(){
+      var now=(performance&&performance.now?performance.now():0);
+      if(now-lastRaf>400){ refreshH(); measure(); cur=target; apply(cur); }
+    },250);
+  } else { refreshH(); measure(); apply(0); }
+
+  /* Reveal is gated on .js and force-completed on a timer, so a failed observer can never
+     leave a blank page. */
+  document.documentElement.classList.add('js');
+  var rvs=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.12,rootMargin:'0px 0px -5% 0px'});
+    rvs.forEach(function(el){ io.observe(el); });
+  }
+  setTimeout(function(){ rvs.forEach(function(el){ el.classList.add('in'); }); },2500);
+
+  /* Arabic written as Arabic, not as a rendering of the English above it. Where a literal
+     translation went stiff the sentence is rebuilt — shorter clauses, verb-first, and the
+     words people actually use here (سفرة for a spread, صحوننا for our own plates). */
+  var AR={
+    wm:'دونت تيل داد', call:'اتصل',
+    h1:'دونت<br>تيل داد',
+    sub:'أكل طيب… وأسرار أطيب', subAr:'Where good food meets better secrets.',
+    meta:'الخبر · نفتح من ٧ الصباح', hint:'انزل',
+    k1:'السر', h2:'ما يحتاج<br>أحد يدري',
+    p1:'مطعم ومحمصة قهوة مختصة في طريق الملك فهد، نفتح من السابعة صباحًا. سينامون رول، وكيكات تُقطّع أمامك، وشكشوكة تجيك في نفس المقلاة. كل شي على صحوننا الخاصة، وفوق شطرنجي أخضر ما نتنازل عنه.',
+    p2:'وغالبًا المكان زحمة. هذي الحقيقة باختصار. تعال بدري، أو احجز طاولة.',
+    k2:'الأكثر طلبًا', h3:'الوجوه المعروفة',
+    d1:'سينامون رول', d2:'كيك ماتيلدا', d3:'شكشوكة', d4:'ساندويتش البيض',
+    d5:'بان كيك سوفليه', d6:'مشروم ترافل', d7:'فلات وايت', d8:'بيتزا',
+    c1:'الأكثر طلبًا', c2:'حق الشوكولاتة', c3:'طول اليوم', c4:'فطور',
+    c5:'حلو', c6:'مع سبانخ', c7:'مختصة', c8:'من الفرن',
+    note1:'هذي أكثر الأطباق طلبًا، مو القائمة كاملة. القائمة بأسعارها عندنا في المطعم وفي حسابنا على انستقرام — نفضّل ما نحط سعر، على أن نحط سعرًا قديمًا.',
+    k3:'٤٫١ من ٥ · ٢٣٣٨ تقييم على قوقل', h4:'كلامهم هم،<br>مو كلامنا',
+    q1:'«أنصح فيه بشدة! ساندويتش البيض كان لذيذ جدًا.»', q1c:'راشد · مرشد محلي · قوقل',
+    q2:'«من أفضل المطاعم اللي زرناها. الأكل رائع والخدمة ممتازة.»', q2c:'نوف علي · قوقل',
+    note2:'مقتبس من تقييمات قوقل العامة. اختصرناها، وما غيّرنا صياغتها.',
+    k4:'زورونا', h5:'طريق الملك فهد،<br>الخبر',
+    dSat:'السبت', dSun:'الأحد', dMon:'الاثنين', dTue:'الثلاثاء', dWed:'الأربعاء',
+    dThu:'الخميس', dFri:'الجمعة',
+    addr:'الخبر الشمالية، الخبر ٣٤٤٢٥<br>جلوس · طلبات خارجية · توصيل',
+    pol:'لا يُسمح بدخول الأطفال دون ٨ سنوات.', polAr:'No children under 8.',
+    h6:'تعال.<br>ما راح نقول لأحد.',
+    a1:'اتصل ٠٥٤ ٤٣٤ ٧٩٩٩', a2:'انستقرام', a3:'الاتجاهات', a4:'حجز طاولة — قريبًا',
+    note3:'رابط الحجز ورقم واتساب مؤكد لسه ما وصلونا من المطعم، فما ربطنا أي زر على تخمين.',
+    g1:'كلوب ساندويتش', g2:'سلايدرز بريوش', g3:'بيتزا خضراء', g4:'سفرة الفطور',
+    g5:'فرنش توست', g6:'كيك شوكولاتة', g7:'طبقات شوكولاتة', g8:'قشطة تُسكب',
+    g9:'من المطبخ', g10:'توست محمّل',
+    /* the 'a' keys hold the OTHER language's line: each bilingual pair is two sibling
+       elements, never nested, so swapping one can never destroy the other */
+    d1a:'Cinnamon roll', d2a:'Matilda cake', d3a:'Shakshuka', d4a:'Egg sandwich',
+    d5a:'Soufflé pancakes', d6a:'Truffle mushroom', d7a:'Flat white', d8a:'Pizza',
+    g1a:'Club sandwich', g2a:'Brioche sliders', g3a:'Green pizza', g4a:'The spread',
+    g5a:'French toast', g6a:'Chocolate cake', g7a:'Chocolate stack', g8a:'Cream, poured',
+    g9a:'From the pass', g10a:'Toast, loaded',
+    disc:'موقع تصوّري، وليس صفحة رسمية. الصور ملك لدونت تيل داد. أوقات العمل والأطباق والتقييمات مأخوذة من صفحتهم العامة على قوقل وانستقرام بتاريخ ١٤ أغسطس ٢٠٢٦، وغير مؤكدة من المطعم. لا تُعرض أسعار لأنه لم يتم تأكيد أي منها.'
+  };
+  var EN={};
+  document.querySelectorAll('[data-k]').forEach(function(el){ EN[el.dataset.k]=el.innerHTML; });
+
+  document.getElementById('lang').addEventListener('click',function(){
+    ar=!ar;
+    var h=document.documentElement;
+    h.lang=ar?'ar':'en'; h.dir=ar?'rtl':'ltr';
+    this.textContent=ar?'English':'العربية';
+    this.setAttribute('aria-label',ar?'English':'العربية');
+    var map=ar?AR:EN;
+    document.querySelectorAll('[data-k]').forEach(function(el){
+      var v=map[el.dataset.k]; if(v!==undefined) el.innerHTML=v;
+    });
+    lastSeg=-1; apply(cur); onScroll();
+  });
+})();
+</script>
+</body>
+</html>

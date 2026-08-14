@@ -1,0 +1,90 @@
+{
+ "dur": 22.2,
+ "cadence": 1.8,
+ "segments": [
+  {
+   "i": 0,
+   "t": 0.0,
+   "en": "Salted caramel",
+   "ar": "كراميل مملّح",
+   "label": "caramel_pour"
+  },
+  {
+   "i": 1,
+   "t": 1.8,
+   "en": "Pistachio and cream",
+   "ar": "فستق وقشطة",
+   "label": "kunafa_macro"
+  },
+  {
+   "i": 2,
+   "t": 3.6,
+   "en": "The cinnamon roll",
+   "ar": "سينامون رول",
+   "label": "cinnamon_roll"
+  },
+  {
+   "i": 3,
+   "t": 5.4,
+   "en": "Poured at the table",
+   "ar": "يُسكب أمامك",
+   "label": "cream_pour"
+  },
+  {
+   "i": 4,
+   "t": 7.2,
+   "en": "Shakshuka",
+   "ar": "شكشوكة",
+   "label": "shakshuka"
+  },
+  {
+   "i": 5,
+   "t": 9.0,
+   "en": "From the oven",
+   "ar": "من الفرن",
+   "label": "pizza"
+  },
+  {
+   "i": 6,
+   "t": 10.8,
+   "en": "On our own plates",
+   "ar": "على صحوننا",
+   "label": "branded_plate"
+  },
+  {
+   "i": 7,
+   "t": 12.6,
+   "en": "Soufflé pancakes",
+   "ar": "بان كيك سوفليه",
+   "label": "souffle_pancakes"
+  },
+  {
+   "i": 8,
+   "t": 14.4,
+   "en": "Warm, always",
+   "ar": "دايمًا دافي",
+   "label": "sauce_pour"
+  },
+  {
+   "i": 9,
+   "t": 16.2,
+   "en": "Cakes, whole or by the slice",
+   "ar": "كيك كامل أو قطعة",
+   "label": "strawberry_cake"
+  },
+  {
+   "i": 10,
+   "t": 18.0,
+   "en": "Made here, every day",
+   "ar": "يُصنع هنا كل يوم",
+   "label": "bundt_cake"
+  },
+  {
+   "i": 11,
+   "t": 19.8,
+   "en": "Don't tell dad",
+   "ar": "لا تقولون لبابا",
+   "label": "chocolate_layers"
+  }
+ ]
+}
